@@ -1,17 +1,28 @@
 os:
-  - osx
+- osx
 env:
   global:
   - VERSION="0.7.1.post6"
 install:
-  - brew update; brew install python3
-  - git clone -b ${VERSION} git://github.com/igraph/python-igraph
-  - cd python-igraph
-  - python -m pip install -U pip wheel delocate
-  - python -m pip wheel .
-  - python3 -m pip install -U pip wheel delocate
-  - python3 -m pip wheel .
-  - delocate-wheel ./*.whl
+- brew update; brew install python3
+- git clone -b ${VERSION} git://github.com/igraph/python-igraph
+- cd python-igraph
+- python -m pip install -U pip wheel delocate
+- python -m pip wheel .
+- python3 -m pip install -U pip wheel delocate
+- python3 -m pip wheel .
+- delocate-wheel ./*.whl
 script:
-  - pwd
-  - ls
+- pwd
+- ls
+deploy:
+  provider: releases
+  api_key:
+    secure: ThZFmORLxVR0SkKPGop0m5SMBlqdV0M5tMeKQor2RwEJGmB8G3ROGytknGaHQPX2ppiKYAO6JSRY1tcbm+3l/QOWEALFVpaXY/u8XAyBWsjmDOPH6LPTXzypin1b5FkHAXXnuoKZArbDOsQsgsOh78F3lmq0XcspAn5aCPRbjKfeui/oubfjYuGuprhS/+T8ihAabu0OkW83nMh9WYM3t9On3/UyoVuakPaCf20WX9Dkdu/dznoX8Zdn4h+a4/1GRAIpdBnn9NgazHntL9osSzYxvhAkT845mZzALdFbkcUmGw4GxYF7ZARfauLzJl6CmWR3VTzGuGN3LxTFXB7PSQNnqEGBb+11cmoQGS2cZj+x0Rczd3lSNlzC7NV/ADcN0hDpFrNOzV1MdPnJK+MLFKvc+okhSE2mWMlnyXS0SUrTWcSYvbqrtsnDlHs+S93j3YoLfSjWolIDQ75YwRHJOLd9p5to24EB+4etxC5O21MD4spokmjCF68VWJlL1RX+56J2Blq6R2u3fHioK03rYYOGDSNrWfGEflBiBP9/piv6OlfMwn9sJIovoQukrM0aeRUK2MkQkvpaXw+dS0i5wDavy9hYpKPiJpA5+qVJGrCHGALxZhy+VEZvhclBoQdryoBebRZiCixATtti8beZtw2w0d1RNsEdsqOA8HUJzeI=
+  file:
+    - "python_igraph-${VERSION}-cp27-cp27m-macosx_10_11_x86_64.whl"
+    - "python_igraph-${VERSION}-cp36-cp36m-macosx_10_11_x86_64.whl"
+  skip_cleanup: true
+  overwrite: true
+  on:
+    tags: true
